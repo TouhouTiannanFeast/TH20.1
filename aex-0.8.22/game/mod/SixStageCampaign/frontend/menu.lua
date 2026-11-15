@@ -128,11 +128,15 @@ function M.input(key)
   if key=='up'or key=='down'then
    M.entryCursor=(M.entryCursor-1+(key=='up'and-1 or 1))%#M.entries+1;sound('select00')
   elseif key=='left'or key=='right'then
-   M.entryCursor=math.max(1,math.min(#M.entries,M.entryCursor+(key=='left'and-12 or 12)));sound('select00')
+   local target=math.max(1,math.min(6,M.entries[M.entryCursor].stage+(key=='left'and-1 or 1)))
+   if target~=M.entries[M.entryCursor].stage then
+    for i,e in ipairs(M.entries)do if e.stage==target then M.entryCursor=i;break end end
+   end
+   sound('select00')
   elseif key=='cancel'then sound('cancel00');M.switch('player')
   elseif key=='confirm'then
    sound('ok00');local e=M.entries[M.entryCursor]
-   M.switch('launch',function()C.load(e.stage,e.key)end)
+   M.switch('launch',function()C.load(e.stage,e.key,true)end)
   end
  elseif M.page=='data'then
   if key=='cancel'or key=='confirm'then sound('cancel00');M.switch('title')end
@@ -247,8 +251,10 @@ function M.drawPage(page,a,offset)
   sprite(99,portraitX,128,portraitAlpha,portraitGrey)
  elseif page=='practice'then
   sprite(87,32+offset,24,a)
-  local first=math.floor((M.entryCursor-1)/12)*12+1
-  for i=first,math.min(#M.entries,first+11)do
+  local first=M.entryCursor;local selected=M.entries[first].stage
+  while first>1 and M.entries[first-1].stage==selected do first=first-1 end
+  local last=first;while last<#M.entries and M.entries[last+1].stage==selected do last=last+1 end
+  for i=first,last do
    local label=(i==M.entryCursor and'▶ 'or'   ')..M.entries[i].label
    words(label,90+offset,90+(i-first)*28,18,math.floor(a*(i==M.entryCursor and 1 or .65)))
   end

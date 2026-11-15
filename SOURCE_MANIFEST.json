@@ -1181,8 +1181,8 @@
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/campaign.lua",
-    "bytes": 16683,
-    "sha256": "9479953ec018e20b754bd58529b7f41be7f25a4d62223cebb2412ba67bbb4454"
+    "bytes": 17686,
+    "sha256": "339236a25ae4e3207dc17aa4d714b16d990286e1d40886b8c4354f1f42f0bde5"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/cards18.lua",
@@ -1256,8 +1256,8 @@
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/dialogue3.lua",
-    "bytes": 10766,
-    "sha256": "d1abb92a473fe1bd748af5a137c16a2f9178b484f0498509743e793fb81ca59e"
+    "bytes": 10904,
+    "sha256": "4b2ea1a3db5ea44049904a9960488f0ab2fff75c068bccb75515c3afbb3a7fd2"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/dialogue3/README.md",
@@ -1296,13 +1296,13 @@
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/frontend/loading.lua",
-    "bytes": 2411,
-    "sha256": "04fa5d15b7b5cff18b54bf2675bbebf741abb5cfdfbeef10fe3b94b1143957b7"
+    "bytes": 2515,
+    "sha256": "884dad7367414bdb141c5d6f39b702687924a0a8e755ce6561b3867199a8d04b"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/frontend/menu.lua",
-    "bytes": 13678,
-    "sha256": "9bc181c63cd484c182b640c0a2313772f199ed65ffa9460f7ef0a9ff03d6e046"
+    "bytes": 14007,
+    "sha256": "9b7fcd6d4a13154b2d0f6517c897bd638ce1976441d95f604ffb289224666eb8"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/frontend/test-animation.lua",
@@ -1386,8 +1386,8 @@
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/replay-sync.lua",
-    "bytes": 5380,
-    "sha256": "3ecfeb60ef93310a5fd36ce4ad10798927249c09c7b362aae12ecf9081b3c4da"
+    "bytes": 6310,
+    "sha256": "a2eda42700f44996dedf305330aad2582fb112d0834fb4ac8121244661d12afd"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/result-skin.lua",
@@ -1411,8 +1411,8 @@
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/road5-background.lua",
-    "bytes": 10883,
-    "sha256": "c1bf40620e61abb976fa6dffda00b1d2724e32926c901cde6b2d052cadd5e7b0"
+    "bytes": 10992,
+    "sha256": "7377966e6e8acda7b9207da147cf9c07187608e547c592ee368792c5c721de76"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/road5-background/README.md",
@@ -1441,8 +1441,8 @@
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/screenplay/data.lua",
-    "bytes": 60671,
-    "sha256": "698d300aaf4bb7668ab6c271d0238a86af2b0fb222e8201dfb07ae36b8be218a"
+    "bytes": 60655,
+    "sha256": "9f922c410d2b49287a939ab7b28d2762e29987ca4c5c6265e08421656f3a5674"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/screenplay/probe.lua",
@@ -1471,13 +1471,13 @@
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/stage5-dialogue.lua",
-    "bytes": 2092,
-    "sha256": "954e9d3c5b3be01e3c118eb6cfc97d9813b6cfc7161525eeebd1e5ad90afa25f"
+    "bytes": 770,
+    "sha256": "f125c02c8ad8ba40115a1bee3e8fa21c98d7bd0782f751a15df902705c508eea"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/stage5-dialogue/data.lua",
-    "bytes": 7050,
-    "sha256": "f106cfdcf63d7f6b4a235245d7f1b697ef37e3be64a25be929a1be85c0771e6e"
+    "bytes": 7044,
+    "sha256": "a17048c1c97f270f92f28c2c69a27cdb3da542286dea51af3b07a1ce8dccf9cf"
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/stone-audio.lua",
@@ -1496,8 +1496,8 @@
   },
   {
     "path": "aex-0.8.22/game/mod/SixStageCampaign/typography.lua",
-    "bytes": 870,
-    "sha256": "7a04c368d9d26dd3ce9277b3f4927ea9c82423eb41ae2e01189e2730ca1fc351"
+    "bytes": 1307,
+    "sha256": "dd4d1b01e51c4d4f33a7546939ffe5ab65a90e2a6cf9104c6c7c34e163d819e5"
   },
   {
     "path": "aex-0.8.22/game/mod/Stage12Normal/animation-data.lua",

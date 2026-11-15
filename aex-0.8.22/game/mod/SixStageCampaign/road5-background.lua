@@ -179,7 +179,8 @@ function BG:frame()
  for _=1,dt do B.step(self.state,HSoB5.scene)end
 end
 function BG:render()
- if HSoB5.bossActive then return end
+ -- Boss FXHost disappears with its parent, before post-story clears bossActive.
+ if HSoB5.bossActive and IsValid(Zuu4Stage.boss)then return end
  if HSoB5.finished then C.boss5Background.draw()else B.render(self.state)end
 end
 local install=C.install

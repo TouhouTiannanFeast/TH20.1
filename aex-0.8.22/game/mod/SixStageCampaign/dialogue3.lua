@@ -261,6 +261,8 @@ function D.render()
  if not D.active then return end
 
  local p=D.pages[D.page]
+ local rows=SixStageTypography.dialogueRows(p.rows,360)
+ local crowded=#rows>2
 
  local fade=math.min(1,D.age/12)*(D.exit and(1-D.exit/12)or 1)
 
@@ -322,9 +324,9 @@ function D.render()
 
  if name==nil then name=D.scene and D.scene.names[p.speaker]or(p.speaker=='kaguya'and'辉夜'or'死宛')end
 
- glyphs(name,44,112,255*fade,'name')
+ glyphs(name,44,crowded and 116 or 112,255*fade,'name')
 
- for i,line in ipairs(p.rows)do glyphs(line,44,86-(i-1)*22,255*fade)end
+ for i,line in ipairs(rows)do glyphs(line,44,(crowded and 96 or 86)-(i-1)*(crowded and 20 or 22),255*fade)end
 
 end
 

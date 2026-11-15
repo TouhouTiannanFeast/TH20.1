@@ -1,8 +1,8 @@
 -- TH10 ascii.anm scripts3..6: original two-line loading art and drifting stars.
 local C=SixStageCampaign
 local L=stage.New('SixStageLoading',false,true)
-function C.load(index,entry)
- C.loadTarget={index=index,entry=entry}
+function C.load(index,entry,practice)
+ C.loadTarget={index=index,entry=entry,practice=practice}
  stage.Set('SixStageLoading','none')
 end
 function L:init()
@@ -30,7 +30,7 @@ function L:frame()
  -- stays on screen while the real source's synchronous resource import executes.
  if self.age>=60 and self.presented>=2 and os.clock()-self.started>=1 then
   print(string.format('SIX LOADING dispatch frames=%d presented=%d elapsed=%.3f',self.age,self.presented,os.clock()-self.started))
-  C.begin(self.target.index,self.target.entry)
+  C.begin(self.target.index,self.target.entry,self.target.practice)
  end
 end
 local function ease(t)t=math.max(0,math.min(1,t));return 1-(1-t)^2 end

@@ -16,3 +16,15 @@ function P.draw(text,x,y,alpha,role,large)
  end
  return x
 end
+
+-- Render-only reflow: retain the recorded dialogue pages and advance times.
+function P.dialogueRows(rows,width)
+ local out,line,x={},'',0
+ for ch in table.concat(rows or{},''):gmatch('[%z\1-\127\194-\244][\128-\191]*')do
+  local step=#ch==1 and 9 or 18
+  if x+step>width and line~=''then out[#out+1]=line;line='';x=0 end
+  line=line..ch;x=x+step
+ end
+ if line~=''then out[#out+1]=line end
+ return out
+end

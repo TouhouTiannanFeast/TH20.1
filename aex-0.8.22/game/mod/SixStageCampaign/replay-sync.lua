@@ -28,6 +28,9 @@ end
 local set=stage.Set
 function stage.Set(name,mode,path)
  local incoming=stageIndex(name)
+ if incoming and mode~='load' and not P.playing and P.splitOnEntry then
+  P.splitOnEntry=false;R.begin()
+ end
  if incoming and mode=='load'then
   local info=plus.ReplayManager.ReadReplayInfo(path);local row
   for _,v in ipairs(info.stages)do if v.stageName==name then row=v;break end end
@@ -35,18 +38,36 @@ function stage.Set(name,mode,path)
   local vars=DeSerialize(row.stageExtendInfo);local meta=vars.six_replay_meta
   P.playing=true;P.path=path;P.info=info;P.meta=meta;P.stage=name;R.active=false
   C.entry=meta and meta.entry or'full';if meta then C.first=meta.first==true else C.first=incoming==1 end
+  C.practiceMode=meta and meta.practice==true or false
   C.complete=false;C.target=incoming;C.god=false;C.speed=1
   if not meta then print('SIX REPLAY LEGACY missing dialogue/entry metadata '..name)end
  elseif P.playing and incoming then
   mode='load';path=P.path
   return stage.Set(name,mode,path)
  elseif incoming and(mode=='save'or mode=='none'or mode==nil)and R.active then
-  P.record[name]={version=1,entry=C.entry,first=C.first,dialogue={},continues={}}
+  P.record[name]={version=1,entry=C.entry,first=C.first,practice=C.practiceMode,dialogue={},continues={}}
  end
  local wasPlaying=P.playing
  local value=set(name,mode,path)
  if wasPlaying and name=='menu'then P.playing=false;P.meta=nil;P.path=nil end
  return value
+end
+-- Manual stage selection is not part of the engine's eight-key frame stream.
+function C.recordJump(target,entry)
+ if not P.playing and R.active and replayWriter then
+  -- The old take is checkpointed on leaving; start a new take on entry.
+  -- Re-entering the same named stage must not overwrite its earlier frame data.
+  P.splitOnEntry=true
+ end
+end
+local restart=stage.Restart
+function stage.Restart(...)
+ if stage.current_stage and stage.current_stage.stage_name==C.names[C.index]then
+  stage.preserve_res=false
+  if P.playing then return stage.Set(P.stage,'load',P.path)end
+  return C.restart()
+ end
+ return restart(...)
 end
 -- During playback dialogue updates once per logic frame, after recorded keys.
 local update=C.updateDialogue
@@ -75,6 +96,7 @@ function ext.GetPauseMenuOrder(...)
 end
 local key=GetKeyState
 GetKeyState=function(k,...)
+ if P.playing and(k==KEY.F5 or k==KEY.F6 or k==KEY.F7 or k==KEY.F8)then return false end
  if P.playing and P.inDialogue then
   if k==KEY.Z then return KeyState.shoot end
   if k==(KEY.CTRL or 17)then return false end

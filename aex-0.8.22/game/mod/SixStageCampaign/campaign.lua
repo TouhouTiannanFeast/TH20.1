@@ -125,7 +125,8 @@ local function import(i)
  return result
 end
 
-function C.go(i,entry)
+function C.go(i,entry,manual)
+ if manual and C.recordJump then C.recordJump(i,entry or'full')end
  if C.cancelDialogue then C.cancelDialogue()end
  C.clearWait=nil
  if not ext.pause_menu:IsKilled()then
@@ -159,8 +160,26 @@ function C.updateClearWindow()
 end
 stage.group.FinishStage=finish
 core.FinishStage=finish
+-- Pause retry must retain the selected practice route, not restart Normal stage1.
+function C.restart()
+ local i=C.practiceMode and C.index or 1
+ local entry=C.practiceMode and C.activeEntry or 'full'
+ return C.begin(i,entry,C.practiceMode)
+end
+local normalPractice=core.PracticeStart
+core.PracticeStart=function(name)
+ for i,n in ipairs(C.names)do
+  if n==name then return C.begin(i,(i==C.index and C.activeEntry)or'full',true)end
+ end
+ return normalPractice(name)
+end
+stage.group.PracticeStart=core.PracticeStart
 local normalStart=core.Start
 core.Start=function(name)
+ local current=stage.current_stage
+ local order=ext.GetPauseMenuOrder()
+ if current and current.stage_name==C.names[C.index] and
+  (order=='Restart' or order=='Give up and Retry')then return C.restart()end
  if name=='Normal'or type(name)=='table'and name.name=='Normal'then
   C.first=true;C.complete=false;C.entry='full';C.clearWait=nil;C.clearStartTick=nil
  end
@@ -171,7 +190,7 @@ stage.group.New('Normal','menu',{lifeleft=2,power=400,bomb=3},true,2)
 for i,name in ipairs(C.names)do
  local s=stage.group.AddStage('Normal',name,nil,true)
  s.init=function(self)
-  C.index=i;C.leaving=false;C.clearWait=nil;C.visited=C.visited+1
+  C.index=i;C.activeEntry=C.entry;C.leaving=false;C.clearWait=nil;C.visited=C.visited+1
   C.complete=false
   local source=import(i)
   self.source=source
@@ -253,7 +272,7 @@ FrameFunc=function(...)
  if C.select then
   if press(KEY.UP)then C.choice=(C.choice+4)%6+1 end
   if press(KEY.DOWN)then C.choice=C.choice%6+1 end
-  if press(KEY.Z)then C.select=false;C.complete=false;C.go(C.choice)end
+  if press(KEY.Z)then C.select=false;C.complete=false;C.go(C.choice,'full',true)end
   if press(KEY.ESCAPE)then C.select=false end
   return
  end
@@ -345,7 +364,10 @@ function C.prepareMenu()
  C.clearWait=nil;C.clearStartTick=nil
  C.index=0;C.first=true;C.complete=false;C.leaving=false;C.select=false
 end
-function C.begin(index,entry)
+function C.begin(index,entry,practice)
+ if C.cancelDialogue then C.cancelDialogue()end
+ C.reward=nil;C.select=false
+ C.practiceMode=practice==true or(entry~=nil and entry~='full')
  if not C.baseline then captureTables()end
  C.clearWait=nil;C.clearStartTick=nil
  C.first=true;C.complete=false;C.leaving=false;C.entry=entry or'full'
